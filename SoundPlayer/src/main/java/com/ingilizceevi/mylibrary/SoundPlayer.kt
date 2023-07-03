@@ -24,6 +24,9 @@ class SoundPlayer(c: Context) {
             if (mMediaPlayer!!.isPlaying) {
                 mMediaPlayer!!.stop()
             }
+            mMediaPlayer!!.reset()
+            mMediaPlayer!!.release()
+            mMediaPlayer = null
         }
         mMediaPlayer = MediaPlayer()
         mMediaPlayer!!.setDataSource(context, s)
