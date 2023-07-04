@@ -10,6 +10,11 @@ class ConceptLoader (location:String) {
     val theSounds : MutableMap<String,Uri> = mutableMapOf()
     val theImages : MutableMap<String,Drawable> = mutableMapOf()
 
+    fun getConceptStrings():MutableList<String>{
+        val temp : MutableList<String> = ArrayList(0)
+        theImages.forEach{element -> temp.add(element.key) }
+        return temp
+    }
     fun loadAudio(){
         val myPath = Environment.getExternalStorageDirectory().path + "/Music/" + location + "/"
         //val myPath = Environment.getExternalStorageDirectory().path + "/Music/MySounds/" + myChapter + "/"

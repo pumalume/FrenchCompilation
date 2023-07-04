@@ -12,6 +12,7 @@ import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.LinearLayout
 import androidx.core.view.forEach
+import androidx.fragment.app.activityViewModels
 import com.ingilizceevi.conceptbuilder.ConceptLoader
 import com.ingilizceevi.frenchconnection.SoundPlayer
 
@@ -29,7 +30,7 @@ class Scroller : Fragment() {
     private lateinit var concepts : ConceptLoader
     lateinit var sound: SoundPlayer
     lateinit var button: ImageButton
-    //private val gameBrain: GameBrain by activityViewModels()
+    private val gameBrain: GameBrain by activityViewModels()
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -38,7 +39,10 @@ class Scroller : Fragment() {
             param1 = it.getString(ARG_PARAM1)
             param2 = it.getString(ARG_PARAM2)
         }
-        if(param1!=null)concepts = ConceptLoader(param1!!)
+        if(param1!=null) {
+            concepts = ConceptLoader(param1!!)
+        }
+
     }
 
     override fun onCreateView(
@@ -58,6 +62,7 @@ class Scroller : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         addRowToScroll()
         imagesAreAdded()
+        gameBrain.initializeMap(concepts.getConceptStrings())
     }
 
     override fun onResume() {
@@ -131,8 +136,10 @@ class Scroller : Fragment() {
     }
     val myOnClickListener = View.OnClickListener {
         val image = it as ImageView
+        gameBrain.imageHasBeenClicked(image.tag.toString())
         imageSoundIsPlayed(image)
     }
+
 
     fun emptyTheScroll(){
         scroller.removeAllViews()
